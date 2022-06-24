@@ -1,0 +1,1 @@
+go run bitbucket.org/liamstask/goose/cmd/goose

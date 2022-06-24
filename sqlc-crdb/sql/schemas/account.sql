@@ -1,0 +1,5 @@
+CREATE TABLE accounts (
+  id SERIAL PRIMARY KEY,
+  username TEXT UNIQUE,
+  creat_at DATE DEFAULT TIMESTAMP
+);
