@@ -1,0 +1,5 @@
+development:
+  dialect: postgres
+  datasource: user=root sslmode=disable port=26257
+  dir: migrations
+  table: migrations
