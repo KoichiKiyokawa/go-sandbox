@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/kyleconroy/sqlc v1.14.0
 	github.com/lib/pq v1.10.6
-	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
 )
 
 require (
