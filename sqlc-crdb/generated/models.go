@@ -13,3 +13,10 @@ type Account struct {
 	Username sql.NullString
 	CreatAt  sql.NullTime
 }
+
+type Status struct {
+	ID        int32
+	Body      sql.NullString
+	CreatedAt sql.NullTime
+	AccountID sql.NullInt32
+}

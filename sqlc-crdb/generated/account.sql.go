@@ -7,6 +7,7 @@ package generated
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/lib/pq"
 )
@@ -34,6 +35,51 @@ func (q *Queries) FindAccountsByIDs(ctx context.Context, ids []int32) ([]Account
 	for rows.Next() {
 		var i Account
 		if err := rows.Scan(&i.ID, &i.Username, &i.CreatAt); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const findAccountsWithStatuses = `-- name: FindAccountsWithStatuses :many
+select accounts.id, username, creat_at, statuses.id, body, created_at, account_id from accounts join statuses on accounts.id = statuses.account_id
+`
+
+type FindAccountsWithStatusesRow struct {
+	ID        int32
+	Username  sql.NullString
+	CreatAt   sql.NullTime
+	ID_2      int32
+	Body      sql.NullString
+	CreatedAt sql.NullTime
+	AccountID sql.NullInt32
+}
+
+func (q *Queries) FindAccountsWithStatuses(ctx context.Context) ([]FindAccountsWithStatusesRow, error) {
+	rows, err := q.db.QueryContext(ctx, findAccountsWithStatuses)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []FindAccountsWithStatusesRow
+	for rows.Next() {
+		var i FindAccountsWithStatusesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Username,
+			&i.CreatAt,
+			&i.ID_2,
+			&i.Body,
+			&i.CreatedAt,
+			&i.AccountID,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
