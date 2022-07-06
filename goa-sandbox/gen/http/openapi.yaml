@@ -1,0 +1,26 @@
+swagger: "2.0"
+info:
+    title: The virtual wine cellar
+    description: A simple goa service
+    version: ""
+host: localhost:8080
+consumes:
+    - application/json
+    - application/xml
+    - application/gob
+produces:
+    - application/json
+    - application/xml
+    - application/gob
+paths:
+    /timeline/public:
+        get:
+            tags:
+                - twitter-clone
+            summary: publicTimeline twitter-clone
+            operationId: twitter-clone#publicTimeline
+            responses:
+                "200":
+                    description: OK response.
+            schemes:
+                - http
