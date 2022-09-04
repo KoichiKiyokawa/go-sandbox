@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"fx-di/ent/post"
 	"fx-di/ent/user"
 
 	"entgo.io/ent"
@@ -31,6 +32,7 @@ type OrderFunc func(*sql.Selector)
 // columnChecker returns a function indicates if the column exists in the given column.
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
+		post.Table: post.ValidColumn,
 		user.Table: user.ValidColumn,
 	}
 	check, ok := checks[table]
@@ -263,11 +265,11 @@ func IsConstraintError(err error) bool {
 type selector struct {
 	label string
 	flds  *[]string
-	scan  func(context.Context, interface{}) error
+	scan  func(context.Context, any) error
 }
 
 // ScanX is like Scan, but panics if an error occurs.
-func (s *selector) ScanX(ctx context.Context, v interface{}) {
+func (s *selector) ScanX(ctx context.Context, v any) {
 	if err := s.scan(ctx, v); err != nil {
 		panic(err)
 	}

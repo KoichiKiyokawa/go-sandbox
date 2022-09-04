@@ -19,7 +19,12 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	return r.userService.FindAll(ctx)
 }
 
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
+// Posts is the resolver for the posts field.
+func (r *userResolver) Posts(ctx context.Context, obj *model.User) ([]*model.Post, error) {
+	return r.postService.FindAllByUserID(ctx, obj.ID)
+}
 
-type queryResolver struct{ *Resolver }
+// User returns generated.UserResolver implementation.
+func (r *Resolver) User() generated.UserResolver { return &userResolver{r} }
+
+type userResolver struct{ *Resolver }

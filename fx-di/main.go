@@ -29,7 +29,9 @@ func main() {
 			func() *zap.Logger { return logger },
 			newDB,
 			dao.NewUserRepository,
+			dao.NewPostRepository,
 			service.NewUserService,
+			service.NewPostService,
 			resolver.NewResolver,
 		),
 		fx.Invoke(register),
@@ -49,6 +51,9 @@ func newDB() *ent.Client {
 		panic(err)
 	}
 
+	if os.Getenv("DB_DEBUG") != "" {
+		return client.Debug()
+	}
 	return client
 }
 

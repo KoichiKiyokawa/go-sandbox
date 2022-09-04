@@ -9,6 +9,7 @@ import (
 type UserService interface {
 	FindOne(ctx context.Context, id int) (*model.User, error)
 	FindAll(ctx context.Context) ([]*model.User, error)
+	FindOneByPostID(ctx context.Context, postID int) (*model.User, error)
 }
 
 type userService struct {
@@ -35,4 +36,13 @@ func (s *userService) FindAll(ctx context.Context) ([]*model.User, error) {
 	}
 
 	return users, nil
+}
+
+func (s *userService) FindOneByPostID(ctx context.Context, postID int) (*model.User, error) {
+	user, err := s.userRepo.FindOneByPostID(ctx, postID)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }

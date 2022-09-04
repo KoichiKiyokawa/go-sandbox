@@ -18,9 +18,9 @@ func main() {
 
 	for i := 0; i < 10; i++ {
 		name := fmt.Sprintf("user%d", i)
-		_, err := db.User.Create().SetName(name).SetEmail(fmt.Sprintf("%s@example.com", name)).Save(ctx)
-		if err != nil {
-			panic(err)
+		u := db.User.Create().SetName(name).SetEmail(fmt.Sprintf("%s@example.com", name)).SaveX(ctx)
+		for j := 0; j < 100; j++ {
+			_ = db.Post.Create().SetTitle(fmt.Sprintf("%s-post%d-title", name, j)).SetContent(fmt.Sprintf("%s-post%d-content", name, j)).SetAuthor(u).SaveX(ctx)
 		}
 	}
 }

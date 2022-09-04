@@ -5,6 +5,7 @@ import (
 	"fx-di/domain/model"
 	"fx-di/domain/repository"
 	"fx-di/ent"
+	"fx-di/ent/post"
 	"fx-di/ent/user"
 )
 
@@ -36,6 +37,15 @@ func (r *userRepository) FindAll(ctx context.Context) ([]*model.User, error) {
 		result[i] = convertUser(u)
 	}
 	return result, nil
+}
+
+func (r *userRepository) FindOneByPostID(ctx context.Context, postID int) (*model.User, error) {
+	u, err := r.db.User.Query().Where(user.HasPostsWith(post.IDEQ(postID))).First(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return convertUser(u), nil
 }
 
 func convertUser(u *ent.User) *model.User {
