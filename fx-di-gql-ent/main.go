@@ -1,12 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"fx-di/ent"
 	"fx-di/generated"
 	"fx-di/infra/dao"
 	"fx-di/resolver"
 	"fx-di/service"
-	"log"
 	"net/http"
 	"os"
 
@@ -59,7 +59,7 @@ func newDB() *ent.Client {
 
 const defaultPort = "8080"
 
-func register(resolver *resolver.Resolver) {
+func register(resolver *resolver.Resolver, logger *zap.Logger) {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
@@ -70,6 +70,6 @@ func register(resolver *resolver.Resolver) {
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	logger.Info(fmt.Sprintf("connect to http://localhost:%s/ for GraphQL playground", port))
+	logger.Error("serve error", zap.Error(http.ListenAndServe(":"+port, nil)))
 }
