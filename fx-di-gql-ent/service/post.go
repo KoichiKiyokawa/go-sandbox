@@ -7,7 +7,6 @@ import (
 )
 
 type PostService interface {
-	FindAllByUserID(ctx context.Context, userID int) ([]*ent.Post, error)
 	FindOne(ctx context.Context, id int) (*ent.Post, error)
 	FindAll(ctx context.Context) ([]*ent.Post, error)
 }
@@ -18,15 +17,6 @@ type postService struct {
 
 func NewPostService(postRepo repository.PostRepository) PostService {
 	return &postService{postRepo: postRepo}
-}
-
-func (s *postService) FindAllByUserID(ctx context.Context, userID int) ([]*ent.Post, error) {
-	posts, err := s.postRepo.FindAllByUserID(ctx, userID)
-	if err != nil {
-		return nil, err
-	}
-
-	return posts, nil
 }
 
 // FindAll implements PostService

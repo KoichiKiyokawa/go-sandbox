@@ -5,7 +5,6 @@ import (
 	"fx-di/domain/repository"
 	"fx-di/ent"
 	"fx-di/ent/post"
-	"fx-di/ent/user"
 )
 
 type postRepository struct {
@@ -27,19 +26,6 @@ func (r *postRepository) FindOne(ctx context.Context, id int) (*ent.Post, error)
 
 func (r *postRepository) FindAll(ctx context.Context) ([]*ent.Post, error) {
 	posts, err := r.db.Post.Query().All(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	result := make([]*ent.Post, len(posts))
-	for i, p := range posts {
-		result[i] = convertPost(p)
-	}
-	return result, nil
-}
-
-func (r *postRepository) FindAllByUserID(ctx context.Context, userID int) ([]*ent.Post, error) {
-	posts, err := r.db.User.Query().Where(user.IDEQ(userID)).QueryPosts().All(ctx)
 	if err != nil {
 		return nil, err
 	}

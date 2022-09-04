@@ -7,14 +7,14 @@ import (
 	"context"
 	"fmt"
 	"fx-di/ent"
-	"log"
+	"os"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/lib/pq"
 )
 
 func main() {
 	ctx := context.Background()
-	db := newDB(ctx)
+	db := newDB()
 
 	for i := 0; i < 10; i++ {
 		name := fmt.Sprintf("user%d", i)
@@ -25,15 +25,15 @@ func main() {
 	}
 }
 
-func newDB(ctx context.Context) *ent.Client {
-	client, err := ent.Open("sqlite3", "file:dev.db?_fk=1")
-	if err := client.Schema.Create(ctx); err != nil {
-		log.Fatalf("failed creating schema resources: %v", err)
-	}
+func newDB() *ent.Client {
+	client, err := ent.Open("postgres", os.Getenv("DB_URL"))
 
 	if err != nil {
 		panic(err)
 	}
 
+	if os.Getenv("DB_DEBUG") != "" {
+		return client.Debug()
+	}
 	return client
 }

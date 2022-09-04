@@ -12,6 +12,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
@@ -46,7 +47,8 @@ func main() {
 }
 
 func newDB() *ent.Client {
-	client, err := ent.Open("sqlite3", "file:dev.db?_fk=1")
+	client, err := ent.Open("postgres", os.Getenv("DB_URL"))
+
 	if err != nil {
 		panic(err)
 	}
