@@ -2,14 +2,14 @@ package service
 
 import (
 	"context"
-	"fx-di/domain/model"
 	"fx-di/domain/repository"
+	"fx-di/ent"
 )
 
 type PostService interface {
-	FindAllByUserID(ctx context.Context, userID int) ([]*model.Post, error)
-	FindOne(ctx context.Context, id int) (*model.Post, error)
-	FindAll(ctx context.Context) ([]*model.Post, error)
+	FindAllByUserID(ctx context.Context, userID int) ([]*ent.Post, error)
+	FindOne(ctx context.Context, id int) (*ent.Post, error)
+	FindAll(ctx context.Context) ([]*ent.Post, error)
 }
 
 type postService struct {
@@ -20,7 +20,7 @@ func NewPostService(postRepo repository.PostRepository) PostService {
 	return &postService{postRepo: postRepo}
 }
 
-func (s *postService) FindAllByUserID(ctx context.Context, userID int) ([]*model.Post, error) {
+func (s *postService) FindAllByUserID(ctx context.Context, userID int) ([]*ent.Post, error) {
 	posts, err := s.postRepo.FindAllByUserID(ctx, userID)
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (s *postService) FindAllByUserID(ctx context.Context, userID int) ([]*model
 }
 
 // FindAll implements PostService
-func (s *postService) FindAll(ctx context.Context) ([]*model.Post, error) {
+func (s *postService) FindAll(ctx context.Context) ([]*ent.Post, error) {
 	posts, err := s.postRepo.FindAll(ctx)
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func (s *postService) FindAll(ctx context.Context) ([]*model.Post, error) {
 }
 
 // FindOne implements PostService
-func (s *postService) FindOne(ctx context.Context, id int) (*model.Post, error) {
+func (s *postService) FindOne(ctx context.Context, id int) (*ent.Post, error) {
 	post, err := s.postRepo.FindOne(ctx, id)
 	if err != nil {
 		return nil, err

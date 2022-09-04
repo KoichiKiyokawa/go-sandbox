@@ -2,11 +2,11 @@ package repository
 
 import (
 	"context"
-	"fx-di/domain/model"
+	"fx-di/ent"
 )
 
 type UserRepository interface {
-	FindOne(ctx context.Context, id int) (*model.User, error)
-	FindAll(ctx context.Context) ([]*model.User, error)
-	FindOneByPostID(ctx context.Context, postID int) (*model.User, error)
+	FindOne(ctx context.Context, id int) (*ent.User, error)
+	FindAll(ctx context.Context) ([]*ent.User, error)
+	FindOneByPostID(ctx context.Context, postID int) (*ent.User, error)
 }
