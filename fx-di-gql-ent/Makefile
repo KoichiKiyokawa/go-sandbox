@@ -15,12 +15,12 @@ migrate: ## db migrate
 migrate-reset: ## db migrate with reset
 	rm dev.db && make migrate
 
-.PHONY: seed ## db seed
-seed:
+.PHONY: seed
+seed: ## db seed
 	go run script/seed.go
 
-.PHONY: seed ## db seed with reset
-seed-reset:
+.PHONY: seed-reset
+seed-reset: ## db seed with reset
 	make migrate-reset && go run script/seed.go
 
 .PHONY: help
