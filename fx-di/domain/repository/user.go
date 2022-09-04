@@ -1,7 +1,11 @@
 package repository
 
-import "fx-di/domain/model"
+import (
+	"context"
+	"fx-di/domain/model"
+)
 
 type UserRepository interface {
-	FindOne(id int) (*model.User, error)
+	FindOne(ctx context.Context, id int) (*model.User, error)
+	FindAll(ctx context.Context) ([]*model.User, error)
 }
