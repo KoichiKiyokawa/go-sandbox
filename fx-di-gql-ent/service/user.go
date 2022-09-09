@@ -1,4 +1,4 @@
-//go:generate go run github.com/matryer/moq . UserService -rm -out ./mock/user.go -pkg mock
+//go:generate go run github.com/matryer/moq -rm -out ./mock/user.go -pkg mock . UserService
 package service
 
 import (

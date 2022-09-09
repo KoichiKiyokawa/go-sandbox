@@ -7,7 +7,6 @@ require (
 	entgo.io/ent v0.11.3-0.20220830071904-3b1b75b9d7a9
 	github.com/99designs/gqlgen v0.17.16
 	github.com/cosmtrek/air v1.40.4
-	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/haveyoudebuggedit/gotestfmt/v2 v2.3.2
 	github.com/lib/pq v1.10.6

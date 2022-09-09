@@ -1,3 +1,4 @@
+//go:generate go run github.com/matryer/moq -rm -out ./mock/post.go -pkg mock . PostService
 package service
 
 import (
