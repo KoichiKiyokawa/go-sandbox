@@ -25,4 +25,7 @@ jobs:
         with:
           go-version: 1.19
       - run: make lint
-      - run: make test
+      - run: |
+          docker compose up -d
+          sleep 5
+          make test
