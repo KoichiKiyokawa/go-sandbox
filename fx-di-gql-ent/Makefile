@@ -1,4 +1,6 @@
 DEV_DB_URL="host=localhost port=5432 user=postgres dbname=postgres password=postgres sslmode=disable"
+TEST_DB_URL="host=localhost port=5432 user=postgres dbname=test password=postgres sslmode=disable"
+
 .PHONY: dev
 dev: ## run dev server
 	DB_URL=$(DEV_DB_URL) DB_DEBUG=$(DB_DEBUG) go run github.com/cosmtrek/air
@@ -35,7 +37,9 @@ lint: ## run lint
 
 .PHONY: test
 test: ## run tests
-	go test -v -json ./... 2>&1 | go run github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt
+	docker compose exec postgres psql -U postgres -c "DROP DATABASE IF EXISTS test;"
+	docker compose exec postgres psql -U postgres -c "CREATE DATABASE test;"
+	DB_URL=$(TEST_DB_URL) go test -v -json ./... 2>&1 | go run github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt
 
 .PHONY: help
 help: ## Display this help screen
