@@ -1,9 +1,13 @@
 DEV_DB_URL="host=localhost port=5432 user=postgres dbname=postgres password=postgres sslmode=disable"
 TEST_DB_URL="host=localhost port=5432 user=postgres dbname=test password=postgres sslmode=disable"
 
+.PHONY: build
+build: ## build the application
+	go build -o tmp/main cmd/api/main.go
+
 .PHONY: dev
 dev: ## run dev server
-	DB_URL=$(DEV_DB_URL) DB_DEBUG=$(DB_DEBUG) go run github.com/cosmtrek/air
+	DB_URL=$(DEV_DB_URL) DB_DEBUG=$(DB_DEBUG) go run github.com/cosmtrek/air --build.cmd="make build"
 
 .PHONY: create-schema
 create-schema: ## create schema of ent e.g. NAME=User make create-schema

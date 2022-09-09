@@ -19,30 +19,40 @@ import (
 )
 
 func main() {
-	logger, err := zap.NewDevelopment()
-	if err != nil {
-		panic(err)
-	}
 
 	app := fx.New(
 		fx.Provide(
-			func() *zap.Logger { return logger },
+			// main
+			newLogger,
 			newDB,
+
+			// dao
 			dao.NewUserRepository,
 			dao.NewPostRepository,
+
+			// service
 			service.NewUserService,
 			service.NewPostService,
+
+			// resolver
 			resolver.NewResolver,
 		),
 		fx.Invoke(register),
-		fx.WithLogger(
-			func() fxevent.Logger {
-				return &fxevent.ZapLogger{Logger: logger}
-			},
+		fx.WithLogger(func(logger *zap.Logger) fxevent.Logger {
+			return &fxevent.ZapLogger{Logger: logger}
+		},
 		),
 	)
 
 	app.Run()
+}
+
+func newLogger() *zap.Logger {
+	logger, err := zap.NewDevelopment()
+	if err != nil {
+		panic(err)
+	}
+	return logger
 }
 
 func newDB() *ent.Client {
@@ -60,7 +70,9 @@ func newDB() *ent.Client {
 
 const defaultPort = "8080"
 
-func register(resolver *resolver.Resolver, logger *zap.Logger) {
+func register(resolver *resolver.Resolver, logger *zap.Logger, client *ent.Client) {
+	defer client.Close()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
@@ -72,5 +84,5 @@ func register(resolver *resolver.Resolver, logger *zap.Logger) {
 	http.Handle("/query", srv)
 
 	logger.Info(fmt.Sprintf("connect to http://localhost:%s/ for GraphQL playground", port))
-	logger.Error("serve error", zap.Error(http.ListenAndServe(":"+port, nil)))
+	logger.Error("serve error", zap.Error(http.ListenAndServe("127.0.0.1:"+port, nil)))
 }
