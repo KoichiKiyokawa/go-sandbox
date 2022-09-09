@@ -29,6 +29,10 @@ seed-reset: ## db seed with reset
 	@make migrate-reset
 	@make seed
 
+.PHONY: lint
+lint: ## run lint
+	go vet ./...
+
 .PHONY: test
 test: ## run tests
 	go test -v -json ./... 2>&1 | go run github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt
