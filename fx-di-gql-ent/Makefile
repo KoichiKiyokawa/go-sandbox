@@ -31,7 +31,7 @@ seed-reset: ## db seed with reset
 
 .PHONY: test
 test: ## run tests
-	go run github.com/rakyll/gotest -v ./...
+	go test -v -json ./... 2>&1 | go run github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt
 
 .PHONY: help
 help: ## Display this help screen

@@ -9,9 +9,9 @@ require (
 	github.com/cosmtrek/air v1.40.4
 	github.com/golang/mock v1.6.0
 	github.com/hashicorp/go-multierror v1.1.1
+	github.com/haveyoudebuggedit/gotestfmt/v2 v2.3.2
 	github.com/lib/pq v1.10.6
 	github.com/mattn/go-sqlite3 v1.14.15
-	github.com/rakyll/gotest v0.0.6
 	github.com/stretchr/testify v1.8.0
 	github.com/vektah/gqlparser/v2 v2.5.0
 	github.com/vmihailenco/msgpack/v5 v5.0.0-beta.9

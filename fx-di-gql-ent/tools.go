@@ -7,5 +7,5 @@ import (
 	_ "github.com/99designs/gqlgen"
 	_ "github.com/cosmtrek/air"
 	_ "github.com/golang/mock/mockgen"
-	_ "github.com/rakyll/gotest"
+	_ "github.com/haveyoudebuggedit/gotestfmt/v2/cmd/gotestfmt"
 )
