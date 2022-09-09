@@ -3,9 +3,15 @@ on:
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/fx-di-gql-ent.yml
+      - fx-di-gql-ent/**
   pull_request:
     branches:
       - main
+    paths:
+      - .github/workflows/fx-di-gql-ent.yml
+      - fx-di-gql-ent/**
 jobs:
   build:
     runs-on: ubuntu-latest
