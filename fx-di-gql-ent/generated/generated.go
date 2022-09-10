@@ -51,10 +51,11 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Post  func(childComplexity int, id int) int
-		Posts func(childComplexity int) int
-		User  func(childComplexity int, id int) int
-		Users func(childComplexity int) int
+		Health func(childComplexity int) int
+		Post   func(childComplexity int, id int) int
+		Posts  func(childComplexity int) int
+		User   func(childComplexity int, id int) int
+		Users  func(childComplexity int) int
 	}
 
 	User struct {
@@ -66,6 +67,7 @@ type ComplexityRoot struct {
 }
 
 type QueryResolver interface {
+	Health(ctx context.Context) (string, error)
 	Post(ctx context.Context, id int) (*ent.Post, error)
 	Posts(ctx context.Context) ([]*ent.Post, error)
 	User(ctx context.Context, id int) (*ent.User, error)
@@ -114,6 +116,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Post.Title(childComplexity), true
+
+	case "Query.health":
+		if e.complexity.Query.Health == nil {
+			break
+		}
+
+		return e.complexity.Query.Health(childComplexity), true
 
 	case "Query.post":
 		if e.complexity.Query.Post == nil {
@@ -233,6 +242,10 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
+	{Name: "../schema/health.gql", Input: `extend type Query {
+  health: String!
+}
+`, BuiltIn: false},
 	{Name: "../schema/post.gql", Input: `type Post {
   id: ID!
   title: String!
@@ -530,6 +543,50 @@ func (ec *executionContext) fieldContext_Post_author(ctx context.Context, field 
 				return ec.fieldContext_User_posts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_health(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_health(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Health(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_health(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -2947,6 +3004,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
+		case "health":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_health(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "post":
 			field := field
 

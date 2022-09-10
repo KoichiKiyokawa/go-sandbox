@@ -31,8 +31,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
       - run: make lint
+      - run: make build
       - name: Test
         run: |
           docker compose up -d
+          ./tmp/main &
           sleep 5
           make test

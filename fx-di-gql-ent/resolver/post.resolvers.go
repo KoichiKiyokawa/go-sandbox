@@ -6,7 +6,6 @@ package resolver
 import (
 	"context"
 	"fx-di/ent"
-	"fx-di/generated"
 )
 
 // Post is the resolver for the post field.
@@ -18,8 +17,3 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*ent.Post, error) {
 func (r *queryResolver) Posts(ctx context.Context) ([]*ent.Post, error) {
 	return r.postService.FindAll(ctx)
 }
-
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
-
-type queryResolver struct{ *Resolver }
