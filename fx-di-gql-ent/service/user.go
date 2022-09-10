@@ -1,4 +1,3 @@
-//go:generate go run github.com/matryer/moq -rm -out ./mock/user.go -pkg mock . UserService
 package service
 
 import (
@@ -7,6 +6,7 @@ import (
 	"fx-di/ent"
 )
 
+//go:generate go run github.com/matryer/moq -rm -out ./mock/user.go -pkg mock . UserService
 type UserService interface {
 	FindOne(ctx context.Context, id int) (*ent.User, error)
 	FindAll(ctx context.Context) ([]*ent.User, error)
