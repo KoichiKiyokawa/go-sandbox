@@ -11,6 +11,7 @@ import (
 )
 
 func Test_user_FindOne(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name         string
 		userID       int
@@ -54,6 +55,7 @@ func Test_user_FindOne(t *testing.T) {
 }
 
 func Test_user_FindAll(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name         string
 		mockUserRepo *mock.UserRepositoryMock

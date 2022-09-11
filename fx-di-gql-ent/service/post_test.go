@@ -11,6 +11,7 @@ import (
 )
 
 func Test_post_FindOne(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name         string
 		postID       int
@@ -54,6 +55,7 @@ func Test_post_FindOne(t *testing.T) {
 }
 
 func TestFindAll(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name         string
 		mockPostRepo *mock.PostRepositoryMock

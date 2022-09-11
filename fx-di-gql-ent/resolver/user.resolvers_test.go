@@ -11,6 +11,7 @@ import (
 )
 
 func TestUser(t *testing.T) {
+	t.Parallel()
 	ctx := context.Background()
 
 	type params struct {
@@ -67,6 +68,7 @@ func TestUser(t *testing.T) {
 }
 
 func TestUsers(t *testing.T) {
+	t.Parallel()
 	ctx := context.Background()
 
 	tests := []struct {
