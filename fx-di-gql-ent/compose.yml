@@ -1,4 +1,17 @@
 services:
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/Dockerfile.dev
+  #   environment:
+  #     DB_URL: host=postgres port=5432 user=postgres dbname=postgres password=postgres sslmode=disable
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - postgres
+  #   restart: always
   postgres:
     image: postgres:14.5-alpine3.16
     environment:

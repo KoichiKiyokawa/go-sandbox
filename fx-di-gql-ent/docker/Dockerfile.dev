@@ -1,0 +1,5 @@
+FROM golang:1.19.1-alpine
+WORKDIR /app
+COPY . .
+RUN apk update && apk --no-cache add git make gcc && go mod tidy
+CMD go run github.com/cosmtrek/air --build.cmd="make build"
