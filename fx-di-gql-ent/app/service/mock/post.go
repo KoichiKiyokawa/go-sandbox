@@ -5,21 +5,21 @@ package mock
 
 import (
 	"context"
-	"fx-di/domain/repository"
 	"fx-di/ent"
+	"fx-di/app/service"
 	"sync"
 )
 
-// Ensure, that PostRepositoryMock does implement repository.PostRepository.
+// Ensure, that PostServiceMock does implement service.PostService.
 // If this is not the case, regenerate this file with moq.
-var _ repository.PostRepository = &PostRepositoryMock{}
+var _ service.PostService = &PostServiceMock{}
 
-// PostRepositoryMock is a mock implementation of repository.PostRepository.
+// PostServiceMock is a mock implementation of service.PostService.
 //
-//	func TestSomethingThatUsesPostRepository(t *testing.T) {
+//	func TestSomethingThatUsesPostService(t *testing.T) {
 //
-//		// make and configure a mocked repository.PostRepository
-//		mockedPostRepository := &PostRepositoryMock{
+//		// make and configure a mocked service.PostService
+//		mockedPostService := &PostServiceMock{
 //			FindAllFunc: func(ctx context.Context) ([]*ent.Post, error) {
 //				panic("mock out the FindAll method")
 //			},
@@ -28,11 +28,11 @@ var _ repository.PostRepository = &PostRepositoryMock{}
 //			},
 //		}
 //
-//		// use mockedPostRepository in code that requires repository.PostRepository
+//		// use mockedPostService in code that requires service.PostService
 //		// and then make assertions.
 //
 //	}
-type PostRepositoryMock struct {
+type PostServiceMock struct {
 	// FindAllFunc mocks the FindAll method.
 	FindAllFunc func(ctx context.Context) ([]*ent.Post, error)
 
@@ -59,9 +59,9 @@ type PostRepositoryMock struct {
 }
 
 // FindAll calls FindAllFunc.
-func (mock *PostRepositoryMock) FindAll(ctx context.Context) ([]*ent.Post, error) {
+func (mock *PostServiceMock) FindAll(ctx context.Context) ([]*ent.Post, error) {
 	if mock.FindAllFunc == nil {
-		panic("PostRepositoryMock.FindAllFunc: method is nil but PostRepository.FindAll was just called")
+		panic("PostServiceMock.FindAllFunc: method is nil but PostService.FindAll was just called")
 	}
 	callInfo := struct {
 		Ctx context.Context
@@ -77,8 +77,8 @@ func (mock *PostRepositoryMock) FindAll(ctx context.Context) ([]*ent.Post, error
 // FindAllCalls gets all the calls that were made to FindAll.
 // Check the length with:
 //
-//	len(mockedPostRepository.FindAllCalls())
-func (mock *PostRepositoryMock) FindAllCalls() []struct {
+//	len(mockedPostService.FindAllCalls())
+func (mock *PostServiceMock) FindAllCalls() []struct {
 	Ctx context.Context
 } {
 	var calls []struct {
@@ -91,9 +91,9 @@ func (mock *PostRepositoryMock) FindAllCalls() []struct {
 }
 
 // FindOne calls FindOneFunc.
-func (mock *PostRepositoryMock) FindOne(ctx context.Context, id int) (*ent.Post, error) {
+func (mock *PostServiceMock) FindOne(ctx context.Context, id int) (*ent.Post, error) {
 	if mock.FindOneFunc == nil {
-		panic("PostRepositoryMock.FindOneFunc: method is nil but PostRepository.FindOne was just called")
+		panic("PostServiceMock.FindOneFunc: method is nil but PostService.FindOne was just called")
 	}
 	callInfo := struct {
 		Ctx context.Context
@@ -111,8 +111,8 @@ func (mock *PostRepositoryMock) FindOne(ctx context.Context, id int) (*ent.Post,
 // FindOneCalls gets all the calls that were made to FindOne.
 // Check the length with:
 //
-//	len(mockedPostRepository.FindOneCalls())
-func (mock *PostRepositoryMock) FindOneCalls() []struct {
+//	len(mockedPostService.FindOneCalls())
+func (mock *PostServiceMock) FindOneCalls() []struct {
 	Ctx context.Context
 	ID  int
 } {

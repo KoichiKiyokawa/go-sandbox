@@ -3,7 +3,7 @@
 package resolver
 
 import (
-	"fx-di/service"
+	"fx-di/app/service"
 )
 
 // This file will not be regenerated automatically.

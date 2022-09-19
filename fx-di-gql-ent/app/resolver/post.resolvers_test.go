@@ -3,8 +3,8 @@ package resolver
 import (
 	"context"
 	"errors"
+	mock_service "fx-di/app/service/mock"
 	"fx-di/ent"
-	mock_service "fx-di/service/mock"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

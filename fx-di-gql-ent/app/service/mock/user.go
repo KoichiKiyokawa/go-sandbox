@@ -6,7 +6,7 @@ package mock
 import (
 	"context"
 	"fx-di/ent"
-	"fx-di/service"
+	"fx-di/app/service"
 	"sync"
 )
 

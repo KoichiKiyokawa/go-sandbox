@@ -2,7 +2,7 @@ package dao
 
 import (
 	"context"
-	"fx-di/domain/repository"
+	"fx-di/app/domain/repository"
 	"fx-di/ent"
 	"fx-di/ent/post"
 )

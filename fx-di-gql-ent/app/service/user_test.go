@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"errors"
-	"fx-di/domain/repository/mock"
+	"fx-di/app/domain/repository/mock"
 	"fx-di/ent"
 	"testing"
 

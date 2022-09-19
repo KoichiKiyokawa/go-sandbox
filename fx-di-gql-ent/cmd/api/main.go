@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"fx-di/app/infra/dao"
+	"fx-di/app/resolver"
+	"fx-di/app/service"
 	"fx-di/ent"
 	"fx-di/generated"
-	"fx-di/infra/dao"
-	"fx-di/resolver"
-	"fx-di/service"
 	"net/http"
 	"os"
 

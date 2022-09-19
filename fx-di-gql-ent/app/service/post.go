@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"fx-di/domain/repository"
+	"fx-di/app/domain/repository"
 	"fx-di/ent"
 )
 
