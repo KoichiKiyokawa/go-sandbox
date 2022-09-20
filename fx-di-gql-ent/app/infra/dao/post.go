@@ -21,7 +21,7 @@ func (r *postRepository) FindOne(ctx context.Context, id int) (*ent.Post, error)
 		return nil, err
 	}
 
-	return convertPost(p), nil
+	return p, nil
 }
 
 func (r *postRepository) FindAll(ctx context.Context) ([]*ent.Post, error) {
@@ -30,11 +30,7 @@ func (r *postRepository) FindAll(ctx context.Context) ([]*ent.Post, error) {
 		return nil, err
 	}
 
-	result := make([]*ent.Post, len(posts))
-	for i, p := range posts {
-		result[i] = convertPost(p)
-	}
-	return result, nil
+	return posts, nil
 }
 
 func convertPost(p *ent.Post) *ent.Post {

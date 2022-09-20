@@ -5,8 +5,8 @@ package mock
 
 import (
 	"context"
-	"fx-di/ent"
 	"fx-di/app/service"
+	"fx-di/ent"
 	"sync"
 )
 
@@ -26,9 +26,6 @@ var _ service.UserService = &UserServiceMock{}
 //			FindOneFunc: func(ctx context.Context, id int) (*ent.User, error) {
 //				panic("mock out the FindOne method")
 //			},
-//			FindOneByPostIDFunc: func(ctx context.Context, postID int) (*ent.User, error) {
-//				panic("mock out the FindOneByPostID method")
-//			},
 //		}
 //
 //		// use mockedUserService in code that requires service.UserService
@@ -41,9 +38,6 @@ type UserServiceMock struct {
 
 	// FindOneFunc mocks the FindOne method.
 	FindOneFunc func(ctx context.Context, id int) (*ent.User, error)
-
-	// FindOneByPostIDFunc mocks the FindOneByPostID method.
-	FindOneByPostIDFunc func(ctx context.Context, postID int) (*ent.User, error)
 
 	// calls tracks calls to the methods.
 	calls struct {
@@ -59,17 +53,9 @@ type UserServiceMock struct {
 			// ID is the id argument value.
 			ID int
 		}
-		// FindOneByPostID holds details about calls to the FindOneByPostID method.
-		FindOneByPostID []struct {
-			// Ctx is the ctx argument value.
-			Ctx context.Context
-			// PostID is the postID argument value.
-			PostID int
-		}
 	}
-	lockFindAll         sync.RWMutex
-	lockFindOne         sync.RWMutex
-	lockFindOneByPostID sync.RWMutex
+	lockFindAll sync.RWMutex
+	lockFindOne sync.RWMutex
 }
 
 // FindAll calls FindAllFunc.
@@ -137,41 +123,5 @@ func (mock *UserServiceMock) FindOneCalls() []struct {
 	mock.lockFindOne.RLock()
 	calls = mock.calls.FindOne
 	mock.lockFindOne.RUnlock()
-	return calls
-}
-
-// FindOneByPostID calls FindOneByPostIDFunc.
-func (mock *UserServiceMock) FindOneByPostID(ctx context.Context, postID int) (*ent.User, error) {
-	if mock.FindOneByPostIDFunc == nil {
-		panic("UserServiceMock.FindOneByPostIDFunc: method is nil but UserService.FindOneByPostID was just called")
-	}
-	callInfo := struct {
-		Ctx    context.Context
-		PostID int
-	}{
-		Ctx:    ctx,
-		PostID: postID,
-	}
-	mock.lockFindOneByPostID.Lock()
-	mock.calls.FindOneByPostID = append(mock.calls.FindOneByPostID, callInfo)
-	mock.lockFindOneByPostID.Unlock()
-	return mock.FindOneByPostIDFunc(ctx, postID)
-}
-
-// FindOneByPostIDCalls gets all the calls that were made to FindOneByPostID.
-// Check the length with:
-//
-//	len(mockedUserService.FindOneByPostIDCalls())
-func (mock *UserServiceMock) FindOneByPostIDCalls() []struct {
-	Ctx    context.Context
-	PostID int
-} {
-	var calls []struct {
-		Ctx    context.Context
-		PostID int
-	}
-	mock.lockFindOneByPostID.RLock()
-	calls = mock.calls.FindOneByPostID
-	mock.lockFindOneByPostID.RUnlock()
 	return calls
 }

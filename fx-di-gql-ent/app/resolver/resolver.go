@@ -4,6 +4,7 @@ package resolver
 
 import (
 	"fx-di/app/service"
+	"fx-di/ent"
 )
 
 // This file will not be regenerated automatically.
@@ -11,8 +12,9 @@ import (
 type Resolver struct {
 	userService service.UserService
 	postService service.PostService
+	db          *ent.Client
 }
 
-func NewResolver(userService service.UserService, postService service.PostService) *Resolver {
-	return &Resolver{userService: userService, postService: postService}
+func NewResolver(userService service.UserService, postService service.PostService, db *ent.Client) *Resolver {
+	return &Resolver{userService: userService, postService: postService, db: db}
 }
