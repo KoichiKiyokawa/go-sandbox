@@ -10,7 +10,7 @@ help: ## Display this help screen
 dev: ## Run the app in development mode
 	docker compose down
 	docker compose up -d
-	DB_URL=$(DB_URL) go run github.com/cosmtrek/air --build.cmd="make build"
+	DB_URL=$(DB_URL) DB_DEBUG=$(DB_DEBUG) go run github.com/cosmtrek/air --build.cmd="make build"
 
 build: ## build the application
 	go build -o tmp/main cmd/api/main.go
