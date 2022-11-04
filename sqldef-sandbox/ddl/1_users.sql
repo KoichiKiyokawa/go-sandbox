@@ -1,4 +1,4 @@
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  name varchar(191) NOT NULL
+  name varchar(255) NOT NULL
 );
