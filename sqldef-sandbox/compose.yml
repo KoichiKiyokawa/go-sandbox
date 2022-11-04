@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+  sqldef:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.sqldef
+    volumes:
+      - ./ddl:/ddl
+    command: sh -c "exit 0"
+
+volumes:
+  db_data:

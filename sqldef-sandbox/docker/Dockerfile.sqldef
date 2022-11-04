@@ -1,0 +1,9 @@
+FROM debian:bullseye-slim
+RUN apt-get update && apt-get install -y wget && \
+  cd /usr/bin && \
+  wget https://github.com/k0kubun/sqldef/releases/download/v0.13.17/psqldef_linux_amd64.tar.gz && \
+  tar xvzf psqldef_linux_amd64.tar.gz && \
+  rm psqldef_linux_amd64.tar.gz && \
+  apt-get remove -y wget && \
+  apt-get clean
+# ENTRYPOINT [ "psqldef" ]
