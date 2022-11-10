@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile.sqldef
     volumes:
       - ./ddl:/ddl
-    command: sh -c "exit 0"
+      - ./scripts:/scripts
 
 volumes:
   db_data:
