@@ -12,6 +12,7 @@ MERGED_SCHMEA=$(cat ../ddl/*)
 
 # INSERT文を削除(INSERT<任意の文字列の連続>;の形式を削除)
 # ダブルクォーテーションで囲わないと、変数に入れたときに改行がなくなってしまうことに注意 https://ex1.m-yabe.com/archives/3339
+# perl -0peで複数行の置換を行う https://qiita.com/takc923/items/e608568a9734e2d84f7f
 INSERT_REMOVED_SCHEMA=$(echo "$MERGED_SCHMEA" | perl -0pe 's/INSERT.+?;//gs')
 
 COMMAND='echo "$INSERT_REMOVED_SCHEMA" | psqldef -h $HOST -U $DB_USER $DB_NAME -W $DB_PASSWORD'
