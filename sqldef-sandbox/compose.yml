@@ -7,6 +7,16 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
+  mysql:
+    image: mysql:5.7
+    platform: linux/amd64
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=mysql
+    ports:
+      - 3306:3306
   sqldef:
     build:
       context: ./docker
