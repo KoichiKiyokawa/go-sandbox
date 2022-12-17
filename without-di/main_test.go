@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestHoge(t *testing.T) {
+func Test(t *testing.T) {
 	tests := []struct {
 		name                               string
 		selectedUserRepositoryFindByIdMock mockDB.UserRepositoryFindByIdEnum
