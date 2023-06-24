@@ -1,0 +1,30 @@
+datasource db {
+  // could be postgresql or mysql
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+generator db {
+  provider = "go run github.com/steebchen/prisma-client-go"
+}
+
+model User {
+  id    String @id @default(cuid())
+  name  String
+  email String @unique
+  posts Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id       String @id @default(cuid())
+  title    String
+  content  String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
