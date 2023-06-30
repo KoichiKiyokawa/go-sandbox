@@ -1,0 +1,5 @@
+graph/
+ent/*
+!ent/schema
+!ent/entc.go
+ent.db
