@@ -8,17 +8,16 @@ import (
 	"bulletproof-go/graph"
 	"bulletproof-go/graph/model"
 	"context"
-	"fmt"
 )
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	return r.userUseCase.Find(ctx, id)
 }
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+	return r.userUseCase.FindAll(ctx)
 }
 
 // Query returns graph.QueryResolver implementation.
