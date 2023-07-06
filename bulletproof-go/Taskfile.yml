@@ -1,0 +1,8 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  di: 
+    cmd: go run github.com/google/wire/cmd/wire
+    dir: ./di

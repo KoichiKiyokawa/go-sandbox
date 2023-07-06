@@ -1,9 +1,10 @@
 package main
 
 import (
+	"bulletproof-go/di"
 	"bulletproof-go/graph"
-	"bulletproof-go/resolver"
 	"context"
+	"database/sql"
 	"log"
 	"net/http"
 	"os"
@@ -27,7 +28,12 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Gzip())
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &resolver.Resolver{}}))
+	db, err := sql.Open("", "")
+	if err != nil {
+		panic(err)
+	}
+
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: di.InitializeResolver(db)}))
 
 	e.GET("/graphql", func(c echo.Context) error {
 		playground.Handler("GraphQL playground", "/graphql").ServeHTTP(c.Response().Writer, c.Request())

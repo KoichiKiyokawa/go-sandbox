@@ -17,8 +17,8 @@ type userUseCase struct {
 	transactionManager TransactionManager
 }
 
-func NewUserUseCase(userRepo repository.UserRepository) UserUseCase {
-	return &userUseCase{userRepo: userRepo}
+func NewUserUseCase(userRepo repository.UserRepository, transactionManager TransactionManager) UserUseCase {
+	return &userUseCase{userRepo: userRepo, transactionManager: transactionManager}
 }
 
 func (u *userUseCase) FindAll(ctx context.Context) ([]*model.User, error) {

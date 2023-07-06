@@ -6,7 +6,7 @@ import (
 	"database/sql"
 )
 
-var dbKey = struct{}{}
+const dbKey = iota
 
 type transactionManager struct {
 	db *sql.DB
