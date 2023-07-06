@@ -4,5 +4,15 @@ version: '3'
 
 tasks:
   di: 
+    desc: Generate DI with wire
     cmd: go run github.com/google/wire/cmd/wire
     dir: ./di
+
+  migrate:gen:
+    desc: Generate migration file. ex) NAME=create_users task gen:migration
+    cmd: |
+      go run ariga.io/atlas/cmd/atlas migrate diff $NAME \
+        --to "file://db/schema.sql" \
+        --dev-url "sqlite://dev.db" {{.CLI_ARGS}}
+  
+  migrate:apply: go run ariga.io/atlas/cmd/atlas migrate apply {{.CLI_ARGS}}
