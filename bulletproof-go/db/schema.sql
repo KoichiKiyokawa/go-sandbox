@@ -1,6 +1,7 @@
 CREATE TABLE users (
   id TEXT PRIMARY KEY,
-  name TEXT
+  name TEXT,
+  email TEXT
 );
 
 CREATE TABLE posts (

@@ -1,49 +1,34 @@
 package db
 
 import (
+	"bulletproof-go/gen/queries"
 	"bulletproof-go/usecase"
 	"context"
 	"database/sql"
 )
 
-const dbKey = iota
+const sqlcKey = iota
 
 type transactionManager struct {
-	db *sql.DB
+	db      *sql.DB
+	queries *queries.Queries
 }
 
-func NewTransactionManager(db *sql.DB) usecase.TransactionManager {
-	return &transactionManager{db: db}
+func NewTransactionManager(queries *queries.Queries) usecase.TransactionManager {
+	return &transactionManager{queries: queries}
 }
 
-func (t *transactionManager) Transaction(ctx context.Context, action func(ctx context.Context) error) error {
+func (t *transactionManager) Transaction(ctx context.Context, action func(queries *queries.Queries) error) error {
 	tx, err := t.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
 	}
 
-	ctx = context.WithValue(ctx, dbKey, tx)
-	if err := action(ctx); err != nil {
+	if err := action(t.queries.WithTx(tx)); err != nil {
 		if err := tx.Rollback(); err != nil {
 			return err
 		}
 	}
 
 	return tx.Commit()
-}
-
-type DbManager struct {
-	db *sql.DB
-}
-
-func NewDbManager(db *sql.DB) *DbManager {
-	return &DbManager{db: db}
-}
-
-func (d DbManager) GetDB(ctx context.Context) *sql.DB {
-	if db := ctx.Value(dbKey).(*sql.DB); db != nil {
-		return db
-	}
-
-	return d.db
 }

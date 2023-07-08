@@ -1,9 +1,11 @@
 package usecase
 
 import (
-	"bulletproof-go/domain/repository"
+	"bulletproof-go/gen/queries"
 	"bulletproof-go/graph/model"
 	"context"
+
+	"github.com/jinzhu/copier"
 )
 
 type UserUseCase interface {
@@ -13,20 +15,40 @@ type UserUseCase interface {
 }
 
 type userUseCase struct {
-	userRepo           repository.UserRepository
+	queries            queries.Querier
 	transactionManager TransactionManager
 }
 
-func NewUserUseCase(userRepo repository.UserRepository, transactionManager TransactionManager) UserUseCase {
-	return &userUseCase{userRepo: userRepo, transactionManager: transactionManager}
+func NewUserUseCase(queries queries.Querier, transactionManager TransactionManager) UserUseCase {
+	return &userUseCase{queries: queries, transactionManager: transactionManager}
 }
 
 func (u *userUseCase) FindAll(ctx context.Context) ([]*model.User, error) {
-	return u.userRepo.FindAll(ctx)
+	users, err := u.queries.GetUsers(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make([]*model.User, len(users))
+	if err := copier.Copy(&res, &users); err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 func (u *userUseCase) Find(ctx context.Context, id string) (*model.User, error) {
-	return u.userRepo.Find(ctx, id)
+	user, err := u.queries.GetUser(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var res *model.User
+	if err := copier.Copy(res, user); err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 type RegisterInput struct {
@@ -35,7 +57,7 @@ type RegisterInput struct {
 }
 
 func (u *userUseCase) Register(ctx context.Context, input RegisterInput) error {
-	return u.transactionManager.Transaction(ctx, func(ctx context.Context) error {
+	return u.transactionManager.Transaction(ctx, func(queries *queries.Queries) error {
 		return nil
 	})
 }

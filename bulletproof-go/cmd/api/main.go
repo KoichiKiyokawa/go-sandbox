@@ -15,6 +15,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 const defaultPort = "8080"
@@ -28,7 +29,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Gzip())
 
-	db, err := sql.Open("", "")
+	db, err := sql.Open("sqlite3", "dev.db")
 	if err != nil {
 		panic(err)
 	}

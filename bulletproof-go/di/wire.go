@@ -4,7 +4,7 @@
 package di
 
 import (
-	"bulletproof-go/infra/dao"
+	"bulletproof-go/gen/queries"
 	"bulletproof-go/infra/db"
 	"bulletproof-go/resolver"
 	"bulletproof-go/usecase"
@@ -16,11 +16,10 @@ import (
 func InitializeResolver(_db *sql.DB) *resolver.Resolver {
 	wire.Build(
 		// infra
+		queries.New,
+		wire.Bind(new(queries.DBTX), new(*sql.DB)),
+		wire.Bind(new(queries.Querier), new(*queries.Queries)),
 		db.NewTransactionManager,
-		db.NewDbManager,
-
-		// repository
-		dao.NewUserDAO,
 
 		// usecase
 		usecase.NewUserUseCase,

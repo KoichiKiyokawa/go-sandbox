@@ -1,7 +1,10 @@
 package usecase
 
-import "context"
+import (
+	"bulletproof-go/gen/queries"
+	"context"
+)
 
 type TransactionManager interface {
-	Transaction(ctx context.Context, action func(ctx context.Context) error) error
+	Transaction(ctx context.Context, action func(queries *queries.Queries) error) error
 }

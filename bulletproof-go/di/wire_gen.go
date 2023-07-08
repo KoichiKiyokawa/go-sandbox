@@ -7,7 +7,7 @@
 package di
 
 import (
-	"bulletproof-go/infra/dao"
+	"bulletproof-go/gen/queries"
 	"bulletproof-go/infra/db"
 	"bulletproof-go/resolver"
 	"bulletproof-go/usecase"
@@ -17,10 +17,9 @@ import (
 // Injectors from wire.go:
 
 func InitializeResolver(_db *sql.DB) *resolver.Resolver {
-	dbManager := db.NewDbManager(_db)
-	userRepository := dao.NewUserDAO(dbManager)
-	transactionManager := db.NewTransactionManager(_db)
-	userUseCase := usecase.NewUserUseCase(userRepository, transactionManager)
+	queriesQueries := queries.New(_db)
+	transactionManager := db.NewTransactionManager(queriesQueries)
+	userUseCase := usecase.NewUserUseCase(queriesQueries, transactionManager)
 	resolverResolver := resolver.NewResolver(userUseCase)
 	return resolverResolver
 }
