@@ -7,6 +7,8 @@ tasks:
 
   dev: go run cmd/api/main.go
 
+  lint: go run github.com/golangci/golangci-lint/cmd/golangci-lint run
+
   di:
     desc: "Generate DI with wire"
     cmd: go run github.com/google/wire/cmd/wire

@@ -7,8 +7,6 @@ import (
 	"database/sql"
 )
 
-const sqlcKey = iota
-
 type transactionManager struct {
 	db      *sql.DB
 	queries *queries.Queries
