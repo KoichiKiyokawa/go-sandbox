@@ -10,4 +10,5 @@ import (
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
 	_ "github.com/google/wire/cmd/wire"
 	_ "github.com/kyleconroy/sqlc/cmd/sqlc"
+	_ "github.com/matryer/moq"
 )

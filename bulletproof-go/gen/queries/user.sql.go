@@ -7,7 +7,25 @@ package queries
 
 import (
 	"context"
+	"database/sql"
 )
+
+const createUser = `-- name: CreateUser :one
+INSERT INTO users (id, name, email) VALUES (?, ?, ?) RETURNING id, name, email
+`
+
+type CreateUserParams struct {
+	ID    string
+	Name  sql.NullString
+	Email sql.NullString
+}
+
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, createUser, arg.ID, arg.Name, arg.Email)
+	var i User
+	err := row.Scan(&i.ID, &i.Name, &i.Email)
+	return i, err
+}
 
 const getUser = `-- name: GetUser :one
 SELECT id, name, email FROM users WHERE id = ? LIMIT 1
