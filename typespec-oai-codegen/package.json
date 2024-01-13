@@ -1,0 +1,16 @@
+{
+  "name": "typespec-oai-codegen",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@typespec/compiler": "latest",
+    "@typespec/http": "latest",
+    "@typespec/openapi3": "latest",
+    "@typespec/rest": "latest"
+  },
+  "private": true,
+  "devDependencies": {
+    "prettier": "^3.2.1",
+    "prettier-plugin-sql": "^0.18.0"
+  }
+}
