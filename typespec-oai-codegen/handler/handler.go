@@ -1,14 +1,16 @@
 package handler
 
 import (
+	"typespec-oai-codegen/db"
 	"typespec-oai-codegen/generated"
-	"typespec-oai-codegen/generated/db"
+	generateddb "typespec-oai-codegen/generated/db"
 )
 
 type handler struct {
-	queries db.Queries
+	queries       generateddb.Queries
+	transactioner db.Transactioner
 }
 
-func NewHandler(queries db.Queries) generated.StrictServerInterface {
-	return &handler{queries: queries}
+func NewHandler(queries generateddb.Queries, transactioner db.Transactioner) generated.StrictServerInterface {
+	return &handler{queries: queries, transactioner: transactioner}
 }

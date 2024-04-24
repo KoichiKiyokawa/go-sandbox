@@ -7,4 +7,3 @@ sql:
       go:
         package: "db"
         out: "generated/db"
-

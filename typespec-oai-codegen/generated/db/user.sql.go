@@ -9,8 +9,54 @@ import (
 	"context"
 )
 
+const changeBalance = `-- name: ChangeBalance :one
+update users set balance = balance + ?1 where id = ?2 returning id, name, email, balance, created_at, updated_at
+`
+
+type ChangeBalanceParams struct {
+	Amount int64
+	ID     string
+}
+
+func (q *Queries) ChangeBalance(ctx context.Context, arg ChangeBalanceParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, changeBalance, arg.Amount, arg.ID)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Email,
+		&i.Balance,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createUser = `-- name: CreateUser :one
+insert into users (name, email) values (?1, ?2) returning id, name, email, balance, created_at, updated_at
+`
+
+type CreateUserParams struct {
+	Name  string
+	Email string
+}
+
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, createUser, arg.Name, arg.Email)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Email,
+		&i.Balance,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const getUserByID = `-- name: GetUserByID :one
-select id, name, email, created_at, updated_at from users where id = ?
+select id, name, email, balance, created_at, updated_at from users where id = ?
 `
 
 func (q *Queries) GetUserByID(ctx context.Context, id string) (User, error) {
@@ -20,6 +66,7 @@ func (q *Queries) GetUserByID(ctx context.Context, id string) (User, error) {
 		&i.ID,
 		&i.Name,
 		&i.Email,
+		&i.Balance,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -27,7 +74,7 @@ func (q *Queries) GetUserByID(ctx context.Context, id string) (User, error) {
 }
 
 const getUserList = `-- name: GetUserList :many
-select id, name, email, created_at, updated_at from users limit ?2 offset ?1
+select id, name, email, balance, created_at, updated_at from users limit ?2 offset ?1
 `
 
 type GetUserListParams struct {
@@ -48,6 +95,7 @@ func (q *Queries) GetUserList(ctx context.Context, arg GetUserListParams) ([]Use
 			&i.ID,
 			&i.Name,
 			&i.Email,
+			&i.Balance,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {

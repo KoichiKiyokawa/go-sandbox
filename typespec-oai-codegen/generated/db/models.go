@@ -21,6 +21,7 @@ type User struct {
 	ID        string
 	Name      string
 	Email     string
+	Balance   int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
