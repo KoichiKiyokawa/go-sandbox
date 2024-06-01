@@ -5,6 +5,13 @@ type User struct {
 	name string
 }
 
+func NewUser(id int, name string) *User {
+	return &User{
+		id:   id,
+		name: name,
+	}
+}
+
 func (u *User) ID() int {
 	return u.id
 }
