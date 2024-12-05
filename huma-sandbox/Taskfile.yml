@@ -1,0 +1,24 @@
+version: '3'
+
+tasks:
+  default: task --list-all
+  fmt-schema:
+    cmd: task _atlas -- schema fmt schema.hcl
+    aliases:
+      - fs
+
+  migrate-generate:
+    cmd: task _atlas -- migrate diff --dir "file://migrations" --to "file://schema.hcl" --dev-url "docker://postgres/15/dev"
+    aliases:
+      - mg
+
+  migrate-apply:
+    cmd: task _atlas -- migrate apply --url {{.DATABASE_URL}} --dir "file://migrations"
+    vars:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+    aliases:
+      - ma
+
+  _atlas:
+    cmd: atlas {{.CLI_ARGS}}
+    # cmd: go run ariga.io/atlas/cmd/atlas {{.CLI_ARGS}}
