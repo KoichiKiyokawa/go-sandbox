@@ -17,14 +17,14 @@ func NewUserHandler(s *storage.Storage) *userHandler {
 }
 
 type UserResponseBody struct {
-	ID       string  `doc:"user id"             json:"id"`
+	ID       string  `json:"id"                 doc:"user id"`
 	Name     string  `json:"name"`
 	Nickname *string `json:"nickname,omitempty"`
 }
 
 type UserListInput struct {
 	PaginationInput
-	Name *string `doc:"Filter users by name" json:"name,omitempty" query:"name"`
+	Name *string `json:"name,omitempty" query:"name" doc:"Filter users by name"`
 }
 type UserListResponse struct {
 	Body struct {

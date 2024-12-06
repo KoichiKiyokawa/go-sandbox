@@ -13,6 +13,8 @@ linters-settings:
   exhaustruct:
     exclude:
       - '.+/huma/v2\.Operation'
+  tagalign:
+    order: [json, query, header, cookie]
   revive:
     enable-all-rules: true
     ignore-generated-header: true
