@@ -4,10 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"huma-sandbox/internal/logger"
-	"huma-sandbox/internal/schema"
 	"net/http"
 	"time"
+
+	"huma-sandbox/internal/logger"
+	"huma-sandbox/internal/schema"
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/danielgtaylor/huma/v2/adapters/humago"
@@ -27,6 +28,7 @@ func main() {
 		api := humago.New(mux, huma.DefaultConfig("My API", "1.0.0"))
 		api.UseMiddleware(logger.LogMiddleware)
 		schema.RegisterUserHandlers(api, db)
+		schema.RegisterPostHandlers(api, db)
 
 		//nolint:exhaustruct
 		server := http.Server{

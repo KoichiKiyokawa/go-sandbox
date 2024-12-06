@@ -9,20 +9,27 @@ func (u userID) String() string {
 }
 
 type User struct {
-	value userValue
+	id       userID
+	name     string
+	nickname *string
 }
 
-type userValue struct {
-	ID       userID
-	Name     string
-	Nickname *string
+func (u User) AutoGenerateNicknameFromOriginalName() User {
+	gen := u.name + "さん"
+	u.nickname = &gen
+
+	return u
 }
 
-func (u User) Value() userValue {
-	return u.value
+// getters
+func (u User) GetID() userID {
+	return u.id
 }
 
-func (u User) AutoGenerateNicknameFromOriginalName() {
-	gen := u.value.Name + "さん"
-	u.value.Nickname = &gen
+func (u User) GetName() string {
+	return u.name
+}
+
+func (u User) GetNickname() *string {
+	return u.nickname
 }
