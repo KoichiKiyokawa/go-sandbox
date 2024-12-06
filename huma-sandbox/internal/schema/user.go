@@ -2,16 +2,15 @@ package schema
 
 import (
 	"database/sql"
-	"net/http"
-
 	"huma-sandbox/internal/handler"
 	"huma-sandbox/internal/infra/storage"
+	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
 )
 
 func RegisterUserHandlers(api huma.API, db *sql.DB) {
-	h := handler.NewUserHandler(storage.NewStorage(db))
+	userHandler := handler.NewUserHandler(storage.NewStorage(db))
 
 	huma.Register(api, huma.Operation{
 		Method:      http.MethodGet,
@@ -22,19 +21,19 @@ func RegisterUserHandlers(api huma.API, db *sql.DB) {
 			"500": {Description: "Internal server error"},
 		},
 		Tags: []string{"users"},
-	}, h.FindUserList)
+	}, userHandler.FindUserList)
 
 	huma.Register(api, huma.Operation{
 		Method:      http.MethodGet,
 		Path:        "/users/{id}",
 		Description: "Get a user by ID",
 		Tags:        []string{"users"},
-	}, h.FindUser)
+	}, userHandler.FindUser)
 
 	huma.Register(api, huma.Operation{
 		Method:      http.MethodPost,
 		Path:        "/users",
 		Description: "Create a new user",
 		Tags:        []string{"users"},
-	}, h.CreateUser)
+	}, userHandler.CreateUser)
 }

@@ -52,19 +52,19 @@ func (c *statusAwareContext) BodyWriter() io.Writer {
 }
 
 func LogMiddleware(ctx huma.Context, next func(huma.Context)) {
-	cc := &statusAwareContext{humaContext: ctx}
-	next(cc)
+	sctx := &statusAwareContext{humaContext: ctx, requestBody: nil, bodyWriter: nil}
+	next(sctx)
 
 	logger.Info(
 		"Request and Response Log",
 		"request", map[string]any{
 			"method": ctx.Method(),
 			"url":    ctx.URL(),
-			"body":   string(cc.requestBody),
+			"body":   string(sctx.requestBody),
 		},
 		"response", map[string]any{
 			"status": ctx.Status(),
-			"body":   cc.ResponseBody(),
+			"body":   sctx.ResponseBody(),
 		},
 	)
 }

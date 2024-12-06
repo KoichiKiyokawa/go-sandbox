@@ -22,7 +22,7 @@ func (u User) Value() userValue {
 	return u.value
 }
 
-func (u *User) AutoGenerateNicknameFromOriginalName() {
+func (u User) AutoGenerateNicknameFromOriginalName() {
 	gen := u.value.Name + "さん"
 	u.value.Nickname = &gen
 }

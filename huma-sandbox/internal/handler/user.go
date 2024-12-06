@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-
 	"huma-sandbox/internal/infra/storage"
 
 	"braces.dev/errtrace"
@@ -13,8 +12,8 @@ type userHandler struct {
 	storage *storage.Storage
 }
 
-func NewUserHandler(storage *storage.Storage) *userHandler {
-	return &userHandler{storage: storage}
+func NewUserHandler(s *storage.Storage) *userHandler {
+	return &userHandler{storage: s}
 }
 
 type UserResponseBody struct {
@@ -61,8 +60,8 @@ type UserResponse struct {
 	Body UserResponseBody
 }
 
-func (h *userHandler) FindUser(ctx context.Context, input *struct {
-	id string `doc:"user id" path:"id"`
+func (*userHandler) FindUser(_ context.Context, _ *struct {
+	ID string `doc:"user id" path:"id"`
 },
 ) (*UserResponse, error) {
 	var resp UserResponse
@@ -77,7 +76,7 @@ type UserCreateInput struct {
 	}
 }
 
-func (h *userHandler) CreateUser(ctx context.Context, input *UserCreateInput) (*UserResponse, error) {
+func (*userHandler) CreateUser(_ context.Context, _ *UserCreateInput) (*UserResponse, error) {
 	var resp UserResponse
 
 	return &resp, nil

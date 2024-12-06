@@ -2,6 +2,7 @@ package domain
 
 import (
 	"huma-sandbox/.gen/postgres/public/model"
+	"time"
 )
 
 func FromUserModelToDomain(userModel model.Users) User {
@@ -16,8 +17,10 @@ func FromUserModelToDomain(userModel model.Users) User {
 
 func FromUserDomainToModel(user User) model.Users {
 	return model.Users{
-		ID:       user.value.ID.String(),
-		Name:     user.value.Name,
-		Nickname: user.value.Nickname,
+		ID:        user.value.ID.String(),
+		Name:      user.value.Name,
+		Nickname:  user.value.Nickname,
+		CreatedAt: time.Time{},
+		UpdatedAt: time.Time{},
 	}
 }

@@ -15,14 +15,14 @@ type FindUserListFilter struct {
 }
 
 func (s *Storage) FindUserList(ctx context.Context, filter FindUserListFilter) ([]domain.User, error) {
-	q := qb.SELECT(table.Users.AllColumns).FROM(table.Users)
+	query := qb.SELECT(table.Users.AllColumns).FROM(table.Users)
 
 	if filter.Name != nil {
-		q = q.WHERE(table.Users.Name.EQ(qb.String(*filter.Name)))
+		query = query.WHERE(table.Users.Name.EQ(qb.String(*filter.Name)))
 	}
 
 	var dest []model.Users
-	if err := q.QueryContext(ctx, s.db, &dest); err != nil {
+	if err := query.QueryContext(ctx, s.db, &dest); err != nil {
 		return nil, errtrace.Wrap(err)
 	}
 

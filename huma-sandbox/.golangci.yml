@@ -10,4 +10,19 @@ linters-settings:
     period: false
     capital: false
     check-all: false
+  exhaustruct:
+    exclude:
+      - '.+/huma/v2\.Operation'
+  revive:
+    enable-all-rules: true
+    ignore-generated-header: true
+    rules:
+      - name: add-constant
+        disabled: true
+      - name: unexported-return
+        disabled: true
+      - name: line-length-limit
+        arguments: [120]
+      - name: nested-structs
+        disabled: true
 

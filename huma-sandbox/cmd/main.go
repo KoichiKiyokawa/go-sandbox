@@ -28,15 +28,16 @@ func main() {
 		api.UseMiddleware(logger.LogMiddleware)
 		schema.RegisterUserHandlers(api, db)
 
+		//nolint:exhaustruct
 		server := http.Server{
-			Addr:    fmt.Sprintf("127.0.0.1:%d", options.Port),
-			Handler: mux,
+			Addr:              fmt.Sprintf("127.0.0.1:%d", options.Port),
+			Handler:           mux,
+			ReadHeaderTimeout: 5 * time.Second,
 		}
+
 		// Tell the CLI how to start your router.
 		hooks.OnStart(func() {
-			if err := server.ListenAndServe(); err != nil {
-				panic(err)
-			}
+			must(server.ListenAndServe())
 		})
 
 		// Tell the CLI how to stop your server.
@@ -44,8 +45,15 @@ func main() {
 			// Give the server 5 seconds to gracefully shut down, then give up.
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
-			_ = server.Shutdown(ctx)
+
+			must(server.Shutdown(ctx))
 		})
 	})
 	cli.Run()
+}
+
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
