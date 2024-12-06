@@ -2,9 +2,10 @@ package schema
 
 import (
 	"database/sql"
-	"huma-sandbox/internal/handler"
-	"huma-sandbox/internal/storage"
 	"net/http"
+
+	"huma-sandbox/internal/handler"
+	"huma-sandbox/internal/infra/storage"
 
 	"github.com/danielgtaylor/huma/v2"
 )

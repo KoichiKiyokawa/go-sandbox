@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"huma-sandbox/internal/storage"
+	"huma-sandbox/internal/infra/storage"
 
 	"braces.dev/errtrace"
 	"github.com/danielgtaylor/huma/v2"
