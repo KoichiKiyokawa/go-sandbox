@@ -32,11 +32,13 @@ func (c *statusAwareContext) ResponseBody() string {
 	if c.bodyWriter == nil {
 		return ""
 	}
+
 	return c.bodyWriter.String()
 }
 
 func (c *statusAwareContext) BodyReader() io.Reader {
 	c.requestBody, _ = io.ReadAll(c.humaContext.BodyReader())
+
 	return io.NopCloser(bytes.NewBuffer(c.requestBody))
 }
 
@@ -44,6 +46,7 @@ func (c *statusAwareContext) BodyWriter() io.Writer {
 	if c.bodyWriter == nil {
 		c.bodyWriter = bytes.NewBuffer(nil)
 	}
+
 	return io.MultiWriter(c.humaContext.BodyWriter(), c.bodyWriter)
 }
 

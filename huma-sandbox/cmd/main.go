@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-	"huma-sandbox/handler"
-	"huma-sandbox/logger"
+	"huma-sandbox/internal/logger"
+	"huma-sandbox/internal/schema"
 	"net/http"
 	"time"
 
@@ -14,16 +15,18 @@ import (
 )
 
 type Options struct {
-	Port int `help:"Port to listen on" short:"p" default:"8888"`
+	Port int `default:"8888" help:"Port to listen on" short:"p"`
 }
 
 func main() {
 	cli := humacli.New(func(hooks humacli.Hooks, options *Options) {
 		mux := http.NewServeMux()
 
+		db := &sql.DB{}
+
 		api := humago.New(mux, huma.DefaultConfig("My API", "1.0.0"))
 		api.UseMiddleware(logger.LogMiddleware)
-		handler.RegisterUserHandlers(api)
+		schema.RegisterUserHandlers(api, db)
 
 		server := http.Server{
 			Addr:    fmt.Sprintf("127.0.0.1:%d", options.Port),
@@ -31,7 +34,9 @@ func main() {
 		}
 		// Tell the CLI how to start your router.
 		hooks.OnStart(func() {
-			server.ListenAndServe()
+			if err := server.ListenAndServe(); err != nil {
+				panic(err)
+			}
 		})
 
 		// Tell the CLI how to stop your server.
@@ -39,7 +44,7 @@ func main() {
 			// Give the server 5 seconds to gracefully shut down, then give up.
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
-			server.Shutdown(ctx)
+			_ = server.Shutdown(ctx)
 		})
 	})
 	cli.Run()

@@ -1,0 +1,10 @@
+linters:
+    enable-all: true
+    disable:
+      - depguard
+linters-settings:
+  godot:
+    period: false
+    capital: false
+    check-all: false
+

@@ -8,8 +8,9 @@ table "users" {
   column "name" {
     type = varchar(255)
   }
-  column "email" {
+  column "nickname" {
     type = varchar(255)
+    null = true
   }
   column "created_at" {
     type = timestamp
