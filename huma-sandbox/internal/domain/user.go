@@ -9,12 +9,20 @@ func (u userID) String() string {
 }
 
 type User struct {
-	ID       readonly[userID]
-	Name     readonly[string]
-	Nickname readonly[*string]
+	value userValue
+}
+
+type userValue struct {
+	ID       userID
+	Name     string
+	Nickname *string
+}
+
+func (u User) Value() userValue {
+	return u.value
 }
 
 func (u *User) AutoGenerateNicknameFromOriginalName() {
-	gen := u.Name.Value() + "さん"
-	u.Nickname = toReadonly(&gen)
+	gen := u.value.Name + "さん"
+	u.value.Nickname = &gen
 }

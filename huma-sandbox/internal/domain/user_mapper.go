@@ -6,8 +6,18 @@ import (
 
 func FromUserModelToDomain(userModel model.Users) User {
 	return User{
-		Name:     toReadonly(userModel.Name),
-		ID:       toReadonly(userID{value: userModel.ID}),
-		Nickname: toReadonly(userModel.Nickname),
+		value: userValue{
+			ID:       userID{value: userModel.ID},
+			Name:     userModel.Name,
+			Nickname: userModel.Nickname,
+		},
+	}
+}
+
+func FromUserDomainToModel(user User) model.Users {
+	return model.Users{
+		ID:       user.value.ID.String(),
+		Name:     user.value.Name,
+		Nickname: user.value.Nickname,
 	}
 }

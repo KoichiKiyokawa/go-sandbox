@@ -9,6 +9,7 @@ import (
 	"github.com/danielgtaylor/huma/v2"
 )
 
+//nolint:gochecknoglobals
 var logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 func Info(msg string) {

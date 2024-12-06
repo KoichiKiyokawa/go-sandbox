@@ -2,10 +2,10 @@ package handler
 
 import (
 	"context"
+
 	"huma-sandbox/internal/storage"
 
 	"braces.dev/errtrace"
-
 	"github.com/danielgtaylor/huma/v2"
 )
 
@@ -25,7 +25,7 @@ type UserResponseBody struct {
 
 type UserListInput struct {
 	PaginationInput
-	Name string `doc:"Filter users by name" query:"name"`
+	Name *string `doc:"Filter users by name" json:"name,omitempty" query:"name"`
 }
 type UserListResponse struct {
 	Body struct {
@@ -36,17 +36,21 @@ type UserListResponse struct {
 func (h *userHandler) FindUserList(ctx context.Context, input *UserListInput) (*UserListResponse, error) {
 	var resp UserListResponse
 
-	userList, err := h.storage.FindUserList(ctx)
+	userList, err := h.storage.FindUserList(ctx, storage.FindUserListFilter{
+		Name: input.Name,
+	})
 	if err != nil {
 		return nil, huma.Error500InternalServerError("", errtrace.Wrap(err))
 	}
 
 	resp.Body.Users = make([]UserResponseBody, 0, len(userList))
+
 	for _, user := range userList {
+		v := user.Value()
 		resp.Body.Users = append(resp.Body.Users, UserResponseBody{
-			ID:       user.ID.Value().String(),
-			Name:     user.Name.Value(),
-			Nickname: user.Nickname.Value(),
+			ID:       v.ID.String(),
+			Name:     v.Name,
+			Nickname: v.Nickname,
 		})
 	}
 

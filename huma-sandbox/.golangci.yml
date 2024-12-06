@@ -2,6 +2,9 @@ linters:
     enable-all: true
     disable:
       - depguard
+      - goimports
+      - gci
+      - mnd
 linters-settings:
   godot:
     period: false

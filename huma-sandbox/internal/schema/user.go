@@ -2,11 +2,11 @@ package schema
 
 import (
 	"database/sql"
+	"huma-sandbox/internal/handler"
+	"huma-sandbox/internal/storage"
 	"net/http"
 
 	"github.com/danielgtaylor/huma/v2"
-	"huma-sandbox/internal/handler"
-	"huma-sandbox/internal/storage"
 )
 
 func RegisterUserHandlers(api huma.API, db *sql.DB) {
