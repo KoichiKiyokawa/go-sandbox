@@ -1,6 +1,6 @@
 services:
   rdb:
-    image: postgres:15
+    image: postgres:17
     volumes:
       - rdb-data:/var/lib/postgresql/data
     environment:
