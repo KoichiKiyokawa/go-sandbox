@@ -1,10 +1,10 @@
 linters:
     enable-all: true
     disable:
-      - depguard
-      - goimports
-      - gci
-      - mnd
+      - depguard # too match for simple structure like this project.
+      - goimports # conflict with gofumpt
+      - gci # conflict with gofumpt
+      - mnd # I think not all magic number is bad. For example, magic number with comment is ok.
 linters-settings:
   godot:
     period: false
@@ -17,12 +17,12 @@ linters-settings:
     enable-all-rules: true
     ignore-generated-header: true
     rules:
-      - name: add-constant
+      - name: add-constant # same as mnd
         disabled: true
-      - name: unexported-return
+      - name: unexported-return # I think unexported return is ok.
         disabled: true
       - name: line-length-limit
         arguments: [120]
-      - name: nested-structs
+      - name: nested-structs # I think nested struct is ok.
         disabled: true
 
