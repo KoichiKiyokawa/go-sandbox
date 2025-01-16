@@ -3,10 +3,10 @@ module gqlgen-prisma
 go 1.20
 
 require (
-	github.com/99designs/gqlgen v0.17.34
-	github.com/steebchen/prisma-client-go v0.18.0
-	github.com/vektah/gqlparser/v2 v2.5.4
-	gorm.io/gen v0.3.22
+	github.com/99designs/gqlgen v0.17.63
+	github.com/steebchen/prisma-client-go v0.45.0
+	github.com/vektah/gqlparser/v2 v2.5.21
+	gorm.io/gen v0.3.26
 )
 
 require (
