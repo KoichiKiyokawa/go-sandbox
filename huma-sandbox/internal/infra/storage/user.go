@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+
 	"huma-sandbox/.gen/postgres/public/model"
 	"huma-sandbox/.gen/postgres/public/table"
 	"huma-sandbox/internal/domain"

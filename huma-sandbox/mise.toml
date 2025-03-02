@@ -1,0 +1,42 @@
+[tasks.install-deps]
+description = "Install Go dependencies"
+run = "go mod tidy"
+
+[tasks.dev]
+description = "Start development environment"
+run = [
+  "docker compose up -d",
+  "go tool air --build.cmd 'go build -o bin/api cmd/main.go' --build.bin './bin/api'",
+]
+
+[tasks.fmt]
+description = "Format Go code"
+run = "go tool gofumpt -l -w ."
+
+[tasks.lint]
+description = "Run Go linters"
+run = "go tool golangci-lint run ./..."
+
+[tasks.lint-fix]
+description = "Run Go linters with auto-fix"
+run = "mise run lint -- --fix"
+
+[tasks.fmt-schema]
+description = "Format database schema"
+run = "mise run _atlas -- schema fmt schema.hcl"
+
+[tasks.migrate-generate]
+description = "Generate database migrations"
+run = "mise run _atlas -- migrate diff --dir 'file://migrations' --to 'file://schema.hcl' --dev-url 'docker://postgres/15/dev'"
+
+[tasks.migrate-apply]
+description = "Apply database migrations"
+run = "mise run _atlas -- migrate apply --url $DATABASE_URL --dir 'file://migrations'"
+
+[tasks.codegen]
+description = "Run code generation for database schema"
+run = "go tool jet -dsn=postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable -schema=public -path=./.gen"
+
+[tasks._atlas]
+description = "Run Atlas tool"
+run = "go tool atlas"
