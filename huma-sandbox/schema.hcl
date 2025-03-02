@@ -36,3 +36,20 @@ table "user_secrets" {
     ref_columns = [table.users.column.id]
   }
 }
+
+table "login_session" {
+  column "user_id" {
+    type = char(26)
+  }
+  column "session" {
+    type = varchar(255)
+  }
+  column "expired_at" {
+    type = timestamp
+  }
+
+  foreign_key "user_fk" {
+    columns     = [column.user_id]
+    ref_columns = [table.users.column.id]
+  }
+}

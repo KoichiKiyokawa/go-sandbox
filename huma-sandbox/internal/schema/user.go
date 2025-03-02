@@ -2,9 +2,11 @@ package schema
 
 import (
 	"database/sql"
-	"huma-sandbox/internal/handler"
-	"huma-sandbox/internal/infra/storage"
 	"net/http"
+
+	"huma-sandbox/internal/handler"
+	"huma-sandbox/internal/handler/middleware"
+	"huma-sandbox/internal/infra/storage"
 
 	"github.com/danielgtaylor/huma/v2"
 )
@@ -36,4 +38,12 @@ func RegisterUserHandlers(api huma.API, db *sql.DB) {
 		Description: "Create a new user",
 		Tags:        []string{"users"},
 	}, userHandler.CreateUser)
+
+	huma.Register(api, huma.Operation{
+		Method:      http.MethodGet,
+		Path:        "/me",
+		Description: "Get the current user",
+		Tags:        []string{"users"},
+		Middlewares: huma.Middlewares{middleware.AuthMiddleware},
+	}, userHandler.FindCurrentUser)
 }

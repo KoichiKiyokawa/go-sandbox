@@ -3,9 +3,16 @@ version: '3'
 tasks:
   default: task --list-all
 
+  install-deps:
+    cmd: go mod tidy
+    aliases: [i]
+  
   dev:
-    cmd: go run github.com/air-verse/air --build.cmd "go build -o bin/api cmd/main.go" --build.bin "./bin/api"
+    cmds:
+      - docker compose up -d
+      - go run github.com/air-verse/air --build.cmd "go build -o bin/api cmd/main.go" --build.bin "./bin/api"
     aliases: [d]
+
   fmt:
     cmd: go run mvdan.cc/gofumpt -l -w .
     aliases: [f]
@@ -36,5 +43,5 @@ tasks:
     aliases: [cg]
 
   _atlas:
-    cmd: atlas {{.CLI_ARGS}}
-    # cmd: go run ariga.io/atlas/cmd/atlas {{.CLI_ARGS}}
+    # cmd: atlas {{.CLI_ARGS}}
+    cmd: go run ariga.io/atlas/cmd/atlas {{.CLI_ARGS}}

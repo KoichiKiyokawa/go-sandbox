@@ -84,3 +84,9 @@ func (*userHandler) CreateUser(_ context.Context, _ *UserCreateInput) (*UserResp
 
 	return &resp, nil
 }
+
+func (*userHandler) FindCurrentUser(_ context.Context, _ *struct{}) (*UserResponse, error) {
+	var resp UserResponse
+
+	return &resp, nil
+}
