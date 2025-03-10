@@ -3,13 +3,13 @@ module gqlgen-prisma
 go 1.20
 
 require (
-	github.com/99designs/gqlgen v0.17.34
-	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365
+	github.com/99designs/gqlgen v0.17.66
+	github.com/iancoleman/strcase v0.3.0
 	github.com/joho/godotenv v1.5.1
-	github.com/shopspring/decimal v1.3.1
-	github.com/steebchen/prisma-client-go v0.18.0
-	github.com/takuoki/gocase v1.0.0
-	github.com/vektah/gqlparser/v2 v2.5.4
+	github.com/shopspring/decimal v1.4.0
+	github.com/steebchen/prisma-client-go v0.47.0
+	github.com/takuoki/gocase v1.1.1
+	github.com/vektah/gqlparser/v2 v2.5.23
 )
 
 require (
