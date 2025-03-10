@@ -3,20 +3,20 @@ module fx-di
 go 1.19
 
 require (
-	entgo.io/contrib v0.3.2
-	entgo.io/ent v0.11.3-0.20220830071904-3b1b75b9d7a9
-	github.com/99designs/gqlgen v0.17.16
-	github.com/cosmtrek/air v1.40.4
+	entgo.io/contrib v0.6.0
+	entgo.io/ent v0.14.3
+	github.com/99designs/gqlgen v0.17.66
+	github.com/cosmtrek/air v1.61.7
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/haveyoudebuggedit/gotestfmt/v2 v2.3.2
-	github.com/lib/pq v1.10.6
-	github.com/matryer/moq v0.2.7
-	github.com/stretchr/testify v1.8.0
-	github.com/vektah/gqlparser/v2 v2.5.0
-	github.com/vmihailenco/msgpack/v5 v5.0.0-beta.9
-	go.uber.org/fx v1.18.1
-	go.uber.org/zap v1.23.0
-	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
+	github.com/haveyoudebuggedit/gotestfmt/v2 v2.5.0
+	github.com/lib/pq v1.10.9
+	github.com/matryer/moq v0.5.3
+	github.com/stretchr/testify v1.10.0
+	github.com/vektah/gqlparser/v2 v2.5.23
+	github.com/vmihailenco/msgpack/v5 v5.4.1
+	go.uber.org/fx v1.23.0
+	go.uber.org/zap v1.27.0
+	golang.org/x/sync v0.12.0
 )
 
 require (
