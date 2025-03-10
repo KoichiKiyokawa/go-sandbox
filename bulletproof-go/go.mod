@@ -3,19 +3,19 @@ module bulletproof-go
 go 1.20
 
 require (
-	ariga.io/atlas/cmd/atlas v0.12.0
-	github.com/99designs/gqlgen v0.17.34
+	ariga.io/atlas/cmd/atlas v0.13.1
+	github.com/99designs/gqlgen v0.17.66
 	github.com/davecgh/go-spew v1.1.1
-	github.com/golangci/golangci-lint v1.53.3
-	github.com/google/uuid v1.3.0
-	github.com/google/wire v0.5.0
-	github.com/jinzhu/copier v0.3.5
-	github.com/kyleconroy/sqlc v1.19.0
-	github.com/labstack/echo/v4 v4.10.2
-	github.com/matryer/moq v0.2.7
-	github.com/mattn/go-sqlite3 v1.14.17
-	github.com/stretchr/testify v1.8.4
-	github.com/vektah/gqlparser/v2 v2.5.4
+	github.com/golangci/golangci-lint v1.64.6
+	github.com/google/uuid v1.6.0
+	github.com/google/wire v0.6.0
+	github.com/jinzhu/copier v0.4.0
+	github.com/kyleconroy/sqlc v1.28.0
+	github.com/labstack/echo/v4 v4.13.3
+	github.com/matryer/moq v0.5.3
+	github.com/mattn/go-sqlite3 v1.14.24
+	github.com/stretchr/testify v1.10.0
+	github.com/vektah/gqlparser/v2 v2.5.23
 )
 
 require (
