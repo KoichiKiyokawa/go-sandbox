@@ -3,9 +3,9 @@ module sqlc-crdb
 go 1.19
 
 require (
-	github.com/kyleconroy/sqlc v1.14.0
-	github.com/lib/pq v1.10.6
-	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
+	github.com/kyleconroy/sqlc v1.28.0
+	github.com/lib/pq v1.10.9
+	golang.org/x/sync v0.12.0
 )
 
 require (

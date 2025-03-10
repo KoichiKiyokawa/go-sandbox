@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	braces.dev/errtrace v0.3.0
-	github.com/danielgtaylor/huma/v2 v2.26.0
+	github.com/danielgtaylor/huma/v2 v2.31.0
 	github.com/go-jet/jet/v2 v2.12.0
 )
 

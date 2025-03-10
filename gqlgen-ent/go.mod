@@ -3,13 +3,13 @@ module gqlgen-ent
 go 1.20
 
 require (
-	entgo.io/contrib v0.4.5
-	entgo.io/ent v0.12.3
-	github.com/99designs/gqlgen v0.17.34
-	github.com/google/uuid v1.3.0
+	entgo.io/contrib v0.6.0
+	entgo.io/ent v0.14.3
+	github.com/99designs/gqlgen v0.17.66
+	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/mattn/go-sqlite3 v1.14.16
-	github.com/vektah/gqlparser/v2 v2.5.4
+	github.com/mattn/go-sqlite3 v1.14.24
+	github.com/vektah/gqlparser/v2 v2.5.23
 )
 
 require (
