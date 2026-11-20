@@ -11,6 +11,6 @@
   "private": true,
   "devDependencies": {
     "prettier": "^3.2.1",
-    "prettier-plugin-sql": "^0.18.0"
+    "prettier-plugin-sql": "^0.20.0"
   }
 }
